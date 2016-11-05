@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.fabricioflores.twitterclient.dataSources.TweetDataSource;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -26,6 +27,7 @@ public class MainActivity extends ListActivity {
     private static final String TWITTER_KEY = "Q8Dt86zMMLTqwrOdzGxCuWGcl";
     private static final String TWITTER_SECRET = "rs4KZMgnsiqJgp8AxqcFDwoZawcmlLLAJ7xzAPlaIK3ayZiJTM";
     private Callback<TimelineResult<Tweet>> callback;
+    TweetDataSource tweetDataSource = null;
 
 
     @Override
@@ -34,11 +36,18 @@ public class MainActivity extends ListActivity {
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
+        tweetDataSource = new TweetDataSource(this);
         callback = new Callback<TimelineResult<Tweet>>() {
 
             @Override
             public void success(Result<TimelineResult<Tweet>> result) {
-                ArrayList<Tweet> tweets = (ArrayList<Tweet>) result.data.items;
+                Object[] tweets = result.data.items.toArray();
+                for(Object tweet: tweets){
+                    Tweet toInsert = (Tweet) tweet;
+                    tweetDataSource.openConnection();
+                    tweetDataSource.addTweet(toInsert);
+                    tweetDataSource.closeConnection();
+                }
             }
 
             @Override
