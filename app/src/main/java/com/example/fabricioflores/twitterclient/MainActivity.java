@@ -1,8 +1,10 @@
 package com.example.fabricioflores.twitterclient;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
+
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.tweetui.SearchTimeline;
@@ -23,8 +25,13 @@ public class MainActivity extends ListActivity {
         TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
+    }
+
+    public void search(View view){
+        EditText editText = (EditText) findViewById(R.id.inputSearch);
+        String query = editText.getText().toString();
         SearchTimeline searchTimeline = new SearchTimeline.Builder()
-                .query("#loja")
+                .query(query)
                 .build();
         TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
                 .setTimeline(searchTimeline)
