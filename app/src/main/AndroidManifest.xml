@@ -18,6 +18,10 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="2ad23aaf70c13b0ded4e0dfeb88bc9c29d49e969" />
+        <provider android:name="com.example.fabricioflores.twitterclient.providers.TweetsProvider"
+            android:authorities="com.fabricioflores.tweetProvider"
+            android:exported="true">
+        </provider>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
