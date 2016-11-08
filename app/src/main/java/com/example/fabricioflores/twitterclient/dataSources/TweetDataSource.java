@@ -33,11 +33,12 @@ public class TweetDataSource {
         }
     }
 
-    public void addTweet(Tweet tweet) throws SQLException {
+    public void addTweet(Tweet tweet, long queryId) throws SQLException {
         ContentValues contentValues = new ContentValues();
         contentValues.put(TweetContract.TweetTable.COLUMN_TEXT, tweet.text);
         contentValues.put(TweetContract.TweetTable.COLUMN_USERNAME, tweet.user.name);
         contentValues.put(TweetContract.TweetTable.COLUMN_USERIMAGE, tweet.user.profileImageUrl);
+        contentValues.put(TweetContract.TweetTable.COLUMN_QUERY_ID, queryId);
         sqLiteDatabase.insertOrThrow(TweetContract.TweetTable.TABLE_NAME, null, contentValues);
     }
 

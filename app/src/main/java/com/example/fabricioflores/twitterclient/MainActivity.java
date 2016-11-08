@@ -6,7 +6,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.fabricioflores.twitterclient.dataSources.QueryDataSource;
 import com.example.fabricioflores.twitterclient.dataSources.TweetDataSource;
+import com.example.fabricioflores.twitterclient.models.Query;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -28,6 +30,8 @@ public class MainActivity extends ListActivity {
     private static final String TWITTER_SECRET = "rs4KZMgnsiqJgp8AxqcFDwoZawcmlLLAJ7xzAPlaIK3ayZiJTM";
     private Callback<TimelineResult<Tweet>> callback;
     TweetDataSource tweetDataSource = null;
+    QueryDataSource queryDataSource = null;
+    private String mainQuery = "";
 
 
     @Override
@@ -37,15 +41,22 @@ public class MainActivity extends ListActivity {
         Fabric.with(this, new Twitter(authConfig));
         setContentView(R.layout.activity_main);
         tweetDataSource = new TweetDataSource(this);
+        queryDataSource = new QueryDataSource(this);
         callback = new Callback<TimelineResult<Tweet>>() {
 
             @Override
             public void success(Result<TimelineResult<Tweet>> result) {
+                Query query = new Query();
+                query.setText(mainQuery);
+                queryDataSource.openConnection();
+                Query savedQuery = queryDataSource.addQuery(query);
+                queryDataSource.closeConnection();
+
                 Object[] tweets = result.data.items.toArray();
                 for(Object tweet: tweets){
                     Tweet toInsert = (Tweet) tweet;
                     tweetDataSource.openConnection();
-                    tweetDataSource.addTweet(toInsert);
+                    tweetDataSource.addTweet(toInsert, savedQuery.getId());
                     tweetDataSource.closeConnection();
                 }
             }
@@ -59,9 +70,9 @@ public class MainActivity extends ListActivity {
 
     public void search(View view){
         EditText editText = (EditText) findViewById(R.id.inputSearch);
-        String query = editText.getText().toString();
+        mainQuery = editText.getText().toString();
         SearchTimeline searchTimeline = new SearchTimeline.Builder()
-                .query(query)
+                .query(mainQuery)
                 .build();
         TweetTimelineListAdapter adapter = new TweetTimelineListAdapter.Builder(this)
                 .setTimeline(searchTimeline)
