@@ -43,7 +43,7 @@ public class TweetDataSource {
     }
 
     public Cursor getAllTweets(String selection){
-        String getAllTweetsQuery = "Select * from " + TweetContract.TweetTable.TABLE_NAME + "where " + selection;
+        String getAllTweetsQuery = "Select * from " + TweetContract.TweetTable.TABLE_NAME + " where " + selection;
         return sqLiteDatabase.rawQuery(getAllTweetsQuery, null);
     }
 }

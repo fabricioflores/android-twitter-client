@@ -56,6 +56,7 @@ public class QueryDataSource {
 
     public Cursor getAllQueries(){
         String getAllTweetsQuery = "Select * from " + QueryContract.QueryTable.TABLE_NAME;
-        return sqLiteDatabase.rawQuery(getAllTweetsQuery, null);
+        Cursor cursor = sqLiteDatabase.rawQuery(getAllTweetsQuery, null);
+        return cursor;
     }
 }
