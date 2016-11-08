@@ -42,8 +42,8 @@ public class TweetDataSource {
         sqLiteDatabase.insertOrThrow(TweetContract.TweetTable.TABLE_NAME, null, contentValues);
     }
 
-    public Cursor getAllTweets(){
-        String getAllTweetsQuery = "Select * from " + TweetContract.TweetTable.TABLE_NAME;
+    public Cursor getAllTweets(String selection){
+        String getAllTweetsQuery = "Select * from " + TweetContract.TweetTable.TABLE_NAME + "where " + selection;
         return sqLiteDatabase.rawQuery(getAllTweetsQuery, null);
     }
 }

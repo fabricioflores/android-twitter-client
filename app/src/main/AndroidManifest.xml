@@ -22,6 +22,10 @@
             android:authorities="com.fabricioflores.tweetProvider"
             android:exported="true">
         </provider>
+        <provider android:name="com.example.fabricioflores.twitterclient.providers.QueriesProvider"
+            android:authorities="com.fabricioflores.queryProvider"
+            android:exported="true">
+        </provider>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

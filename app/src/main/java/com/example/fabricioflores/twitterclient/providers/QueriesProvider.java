@@ -7,30 +7,30 @@ import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.example.fabricioflores.twitterclient.dataSources.TweetDataSource;
+import com.example.fabricioflores.twitterclient.dataSources.QueryDataSource;
 
 /**
  * Created by fabricioflores on 5/11/16.
  */
 
-public class TweetsProvider extends ContentProvider {
+public class QueriesProvider extends ContentProvider {
 
-    private static final String PROVIDER_NAME = "com.fabricioflores.tweetProvider";
-    private static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME + "/tweets");
-    private static final int TWEETS = 1;
+    private static final String PROVIDER_NAME = "com.fabricioflores.queryProvider";
+    private static final Uri CONTENT_URI = Uri.parse("content://" + PROVIDER_NAME + "/queries");
+    private static final int QUERIES = 2;
     private static final UriMatcher uriMatcher = getUriMatcher();
     private static UriMatcher getUriMatcher() {
         UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(PROVIDER_NAME, "tweets", TWEETS);
+        uriMatcher.addURI(PROVIDER_NAME, "queries", QUERIES);
         return uriMatcher;
     }
-    private TweetDataSource tweetDataSource;
+    private QueryDataSource queryDataSource;
 
     @Override
     public String getType(Uri uri) {
         switch (uriMatcher.match(uri)) {
-            case TWEETS:
-                return "vnd.android.cursor.dir/vnd." + PROVIDER_NAME + ".provider.tweets";
+            case QUERIES:
+                return "vnd.android.cursor.dir/vnd." + PROVIDER_NAME + ".provider.queries";
         }
         return "";
     }
@@ -38,14 +38,14 @@ public class TweetsProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
         Context context = getContext();
-        tweetDataSource = new TweetDataSource(context);
+        queryDataSource = new QueryDataSource(context);
         return true;
     }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
-        tweetDataSource.openConnection();
-        return tweetDataSource.getAllTweets(selection);
+        queryDataSource.openConnection();
+        return queryDataSource.getAllQueries();
     }
 
     @Override
