@@ -10,6 +10,7 @@ public class TweetContract {
     public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "twitter.db";
     public static final String TEXT_TYPE = " TEXT ";
+    public static final String INTEGER_TYPE = " INTEGER ";
     public static final String COMMA_SEP = " , ";
 
     private TweetContract(){}
@@ -26,7 +27,7 @@ public class TweetContract {
                 _ID + " INTEGER PRIMARY KEY AUTOINCREMENT " + COMMA_SEP +
                 COLUMN_TEXT + TEXT_TYPE + COMMA_SEP +
                 COLUMN_USERIMAGE + TEXT_TYPE + COMMA_SEP +
-                COLUMN_QUERY_ID + " INTEGER " + COMMA_SEP +
+                COLUMN_QUERY_ID + INTEGER_TYPE + COMMA_SEP +
                 COLUMN_USERNAME + TEXT_TYPE + " );";
 
 

@@ -4,7 +4,6 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.fabricioflores.twitterclient.dataSources.QueryDataSource;
 import com.example.fabricioflores.twitterclient.dataSources.TweetDataSource;
@@ -19,13 +18,10 @@ import com.twitter.sdk.android.tweetui.SearchTimeline;
 import com.twitter.sdk.android.tweetui.TimelineResult;
 import com.twitter.sdk.android.tweetui.TweetTimelineListAdapter;
 
-import java.util.ArrayList;
-
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends ListActivity {
 
-    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
     private static final String TWITTER_KEY = "Q8Dt86zMMLTqwrOdzGxCuWGcl";
     private static final String TWITTER_SECRET = "rs4KZMgnsiqJgp8AxqcFDwoZawcmlLLAJ7xzAPlaIK3ayZiJTM";
     private Callback<TimelineResult<Tweet>> callback;
